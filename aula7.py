@@ -1,11 +1,16 @@
 import tkinter as tk
-from PIL import Image, ImageTk
+import mysql.connector
 
 app = tk.Tk()
 
-def createNewWindow():
-    newWindow = tk.Toplevel(app)
-   
+def conexao():
+    conexao = mysql.connector.connect(
+            host = "localhost",
+            user = "root",
+            passwd = "",
+            db = "usuarios"
+    )
+
 def cadastrarUsuarios():
     janelaUsuarios = tk.Toplevel(app)
 
