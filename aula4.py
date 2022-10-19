@@ -33,6 +33,22 @@ def selecionarUsuarios():
         conn = conexao()
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM USUARIOS")
+        table = cursor.fetchall()
+        print('\n Usuarios: ')
+        for row in table:
+                print("Id: ", row[0], end="\n")
+                print("Nome: ", row[1], end="\n")
+                print("Sobrenome: ", row[2], end="\n")
+                print("Cidade: ", row[3], end="\n")
+                print("Estado: ", row[4], edn="\n")
+                print("Nascimento: ", row[5], end="\n")
+                
+def inserirUsuarios(usuarios):
+        con = conexao()
+        cursor = con.cursor()
+        cursor.execute(f"INSERT INTO usuarios(id, nome, sobrenome, cidade, estado, data_nascimento)"f"VALUES('{usuarios.id}','{usuarios.nome}','{usuarios.sobrenome}','{usuarios.cidade}','{usuarios.estado}','{usuarios.data_nascimento}')")
+        con.commit()
+        desconectar(con)
 
 def cadastrarUsuarios():
     janelaUsuarios = tk.Toplevel(app)
@@ -74,12 +90,14 @@ def cadastrarUsuarios():
     entryEstado.place(x=230, y=150)
     
     def salvarUsuario():
-        conn = conexao()
-        print("O nome informado foi: ",entryNome.get())
-        print("O sobrenome informado foi: ", entrySobrenome.get())
-        print("A data de nascimento informada foi: ", entryDataNascimento.get())
-        print("A cidade informada foi: ", entryCidade.get())
-        print("O estado informado foi: ",entryEstado.get())
+        usuario = Usuarios(None, entryNome.get(),
+        entrySobrenome.get(), entryCidade.get(),
+        entryEstado.get(), entryDataNascimento.get())
+        inserirUsuarios(usuario)
+        #print("O sobrenome informado foi: ", entrySobrenome.get())
+        #print("A data de nascimento informada foi: ", entryDataNascimento.get())
+        #print("A cidade informada foi: ", entryCidade.get())
+        #print("O estado informado foi: ",entryEstado.get())
     btnSalvar = tk.Button(janelaUsuarios,width=20
             ,text="Salvar", command=salvarUsuario)
     btnSalvar.place(x=100,y=175)
@@ -114,4 +132,4 @@ app.title("Sistema Tarumã")
 app.geometry("800x600")
 
 app.mainloop()
-app.destroy()
+#app.destroy()
